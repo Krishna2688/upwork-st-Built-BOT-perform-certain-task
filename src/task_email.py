@@ -2,6 +2,51 @@ import streamlit as st
 import requests
 import json, os
 import csv
+import smtplib
+from email.mime.text import MIMEText
+
+
+def send_email(request):
+    data = request.json
+
+    sender = data["user_email"]
+    password = data["password"]
+    cc = data["cc"]
+    company_name = data["company_name"]
+    ref_id = data["ref_id"]
+    recipient = data["recipient"]
+
+    subject = f"Your Request (Ref: {ref_id})"
+
+    # Mail Merge
+    message = f"""
+        Dear {company_name},
+
+        This is an automated message regarding your request with Reference ID: {ref_id}.
+
+        Thank you,
+        AI Email Bot
+        """
+
+    smtp_host = "smtp.gmail.com"
+    smtp_port = 587
+
+    # Create the email content
+    msg = MIMEText(f"{message}")
+    msg['Subject'] = subject
+    msg['From'] = sender
+    msg["Cc"] = cc
+    msg['To'] = recipient
+
+    try:
+        # Send the email
+        with smtplib.SMTP(smtp_host, smtp_port) as server:  # Replace with your SMTP server
+            server.starttls()
+            server.login(sender, password)  # Replace with your email password
+            server.send_message(msg)
+        return "SUCCESS"
+    except Exception as e:
+        return "FAILED"
 
 # Streamlit UI
 st.title("AI Email Bot")
@@ -43,12 +88,14 @@ if st.button("Send Email"):
             #with st.echo():
             #    st.write(data)
 
-            headers = {'Content-Type': 'application/json'}
+            #headers = {'Content-Type': 'application/json'}
 
-            response = requests.post(url="http://192.168.1.182:8080/send_email", data=json.dumps(data), headers=headers, verify=False)
+            #response = requests.post(url="http://192.168.1.182:8080/send_email", data=json.dumps(data), headers=headers, verify=False)
+
+            response = send_email(data)
 
 
-            if response.status_code == 201:
+            if response == "SUCCESS":
                 st.success("Email sent successfully!")
                 data["status"] = "SUCCESS"
             else:
