@@ -5,12 +5,12 @@ from streamlit_extras.bottom_container import bottom
 # # Streamlit Landing Page
 
 def main():
-    st.logo("./images/sanctum.jpg", size="large")
+    st.logo("sanctum.jpg", size="large")
 
     # Header Section with Logo
     col1, col2 = st.columns([1, 12])
     with col1:
-        st.image("./images/logo.png", width=100)  # Replace 'path_to_logo.png' with the actual path to your logo image
+        st.image("logo.png", width=100)  # Replace 'path_to_logo.png' with the actual path to your logo image
     with col2:
         st.title("Welcome to Task Assist")
         # st.markdown("#### (Prototype Built for MINEMATICS Pvt Ltd.)")
