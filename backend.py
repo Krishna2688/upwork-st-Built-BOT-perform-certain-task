@@ -8,11 +8,6 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-sender = {
-            "d16ebda3-daec-4069-bb1d-f0f4bb3faa9d":
-              {"user":"info.sanctumdigitalsolutions@gmail.com", "password":"ixlidqwzginlmzpd", "smtp_host":"smtp.gmail.com", "smtp_port":587}
-          }
-
 @app.route('/send_email', methods=['POST'])
 def send_email():
     data = request.json
