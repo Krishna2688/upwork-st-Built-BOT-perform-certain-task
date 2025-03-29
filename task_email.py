@@ -48,7 +48,7 @@ def send_email(data):
         return "FAILED"
 
 # Streamlit UI
-st.title("AI Email Bot")
+st.title("📧 Email Bot")
 
 # User Login
 email = st.text_input("Enter your email to log in:")
