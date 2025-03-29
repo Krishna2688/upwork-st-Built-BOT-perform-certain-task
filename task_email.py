@@ -6,8 +6,7 @@ import smtplib
 from email.mime.text import MIMEText
 
 
-def send_email(request):
-    data = request.json
+def send_email(data):
 
     sender = data["user_email"]
     password = data["password"]
